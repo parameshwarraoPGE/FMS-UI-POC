@@ -1,0 +1,65 @@
+<div class="login-container">
+    <form [formGroup]="signupForm">
+        <div class="signIn-block">
+            <h3 class="loginHeader">Create User Login!</h3>
+
+            <h5 class="invalid-credentails" *ngIf="isError">{{errorMessage}}!</h5>
+
+            <div class="input_bloc">
+                <div>
+                    <span class="inputLabel">Name </span>
+                </div>
+                <div>
+                    <input type="text" placeholder="Enter your name!" class="inputbox" formControlName="name" />
+                </div>
+                <div>
+                    <span class="errorMessage"
+                    *ngIf="inputboxValidation('name')">Please enter username!! </span>
+                </div>
+            </div>
+
+            <div class="input_bloc">
+                <div>
+                    <span class="inputLabel"> User Name </span>
+                </div>
+                <div>
+                    <input type="text" placeholder="Enter your email!" class="inputbox" formControlName="email" />
+                </div>
+                <div>
+                    <span class="errorMessage"
+                    *ngIf="inputboxValidation('email')">Please enter valid email address!! </span>
+                </div>
+            </div>
+
+
+
+            <div class="input_bloc">
+                <div>
+                    <span class="inputLabel">Password </span>
+                </div>
+                <div>
+                    <input class="inputbox" placeholder="Enter your password!" [type]="passwordShow ? 'text' : 'password'" formControlName ="password"/>
+                </div>
+                <div>
+                    <span class="errorMessage"
+                        *ngIf="inputboxValidation('password')">Please enter password!! </span>
+                </div>
+                <div class="showPassword-block">
+                    <input type="checkbox" class="password-checkbox" (change)="passwordShow = !passwordShow">
+                    <span class="show-passwordText">Show Password!</span>
+                </div>
+            </div>
+            
+
+            <div>
+                <button class="signUpButton" (click)="createUser()">
+                    Create User!</button>
+            </div>
+
+            <div>
+                <button class="loginButton" (click)="redirectToSignIn()">
+                    Already have Account ? sign in!</button>
+            </div>
+        </div>
+    </form>
+</div>

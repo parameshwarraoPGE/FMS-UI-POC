@@ -1,0 +1,227 @@
+<div class="search-block">
+
+</div>
+<div class="list-container">
+    <div class="search-container">
+        <div class="search-block">
+            <div class="select-block">
+                <div class="select-text">
+                    <span class="select-label-search">
+                        Search by department
+                    </span>
+                </div>
+                <div class="select-element">
+                    <select class="departmentDropdown" [(ngModel)]="selectedDepartmentOption"
+                        (ngModelChange)="onDepartmentSelect($event)">
+                        <option value="" selected>{{'---Select Department ---'}}</option>
+                        <ng-container *ngFor="let department of allDepartmentOptions">
+                            <option [ngValue]="department">{{department}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="select-block">
+                <div class="select-text">
+                    <span class="select-label-search">
+                        Search by bussiness Unit
+                    </span>
+                </div>
+                <div class="select-element">
+                    <select class="departmentDropdown" [(ngModel)]="selectedBuOption"
+                        (ngModelChange)="onBussinessUnitSelect($event)">
+                        <option value="" selected>{{'---Select BU ---'}}</option>
+                        <ng-container *ngFor="let bu of allBussinessUnitOptions">
+                            <option [ngValue]="bu">{{bu}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="select-block">
+                <div class="select-text">
+                    <span class="select-label-search">
+                        Search by country
+                    </span>
+                </div>
+                <div class="select-element">
+                    <select class="departmentDropdown" [(ngModel)]="selectedCountryOption"
+                        (ngModelChange)="onCountrySelect($event)">
+                        <option value="" selected>{{'---Select country ---'}}</option>
+                        <ng-container *ngFor="let country of allCountryOptions">
+                            <option [ngValue]="country">{{country}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="select-block">
+                <div class="select-text">
+                    <span class="select-label-search">
+                        Search by city
+                    </span>
+                </div>
+                <div class="select-element">
+                    <select class="departmentDropdown" [(ngModel)]="selectedCityOption"
+                        (ngModelChange)="onCitySelect($event)">
+                        <option value="" selected>{{'---Select city ---'}}</option>
+                        <ng-container *ngFor="let city of allCityOptions">
+                            <option [ngValue]="city">{{city}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="select-block">
+                <div class="select-text">
+                    <span class="select-label-search">
+                        Search by Gender
+                    </span>
+                </div>
+                <div class="select-element">
+                    <select class="departmentDropdown" [(ngModel)]="selectedGenderOption"
+                        (ngModelChange)="onGenderSelect($event)">
+                        <option value="" selected>{{'---Select Gender ---'}}</option>
+                        <ng-container *ngFor="let gender of allGenderOptions">
+                            <option [ngValue]="gender">{{gender}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="select-block">
+                <div class="select-text">
+                    <span class="select-label-search">
+                        Search by Ethnicity
+                    </span>
+                </div>
+                <div class="select-element">
+                    <select class="departmentDropdown" [(ngModel)]="selectedEthnicityOption"
+                        (ngModelChange)="onEthnicitySelect($event)">
+                        <option value="" selected>{{'---Select ethnicity ---'}}</option>
+                        <ng-container *ngFor="let ethnicity of allEthnicityOptions">
+                            <option [ngValue]="ethnicity">{{ethnicity}}</option>
+                        </ng-container>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="select-block">
+                <div class="select-text">
+                    <span class="select-label-search">
+                        Search by Name
+                    </span>
+                </div>
+                <div class="select-element">
+                    <input #nameSearchText type="text" class="search-inputbox" [(ngModel)]="employeeNameSearchText"
+                        placeholder="search by name" />
+                </div>
+
+            </div>
+
+            <div class="select-block">
+                <div class="select-text">
+                    <span class="select-label-search">
+                        Search by EMP ID
+                    </span>
+                </div>
+                <div class="select-element">
+                    <input #empIDSearchText type="text" class="search-inputbox" [(ngModel)]="employeeIdSearchText"
+                        placeholder="search by emp ID" />
+                </div>
+
+            </div>
+
+
+            <div>
+                <button class="resetButton" (click)="resetAllFeilds()">
+                    Reset All Feilds!</button>
+            </div>
+
+
+
+        </div>
+
+    </div>
+    <div class="pagination Block">
+        <div class="paginationButtonBlock">
+            <div class="paginationButtons">
+                <button type="button" class="btn btn-primary" (click)="pageBackwardButton()"
+                    [disabled]="(currentPage == 1) ? true : false">Previous</button>
+            </div>
+            <div class="currentPage">
+                <span>Current Page: </span><span>{{currentPage}}</span>
+            </div>
+            <div class="TotalCount">
+                <span>Total Count: </span><span>{{totalCount}}</span>
+            </div>
+            <div class="paginationButtons">
+                <button type="button" (click)="pageForwardButton()" [disabled]="disableForwardButton()"
+                    class="btn btn-primary">Next</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="pagination-dropDownBlock">
+        <div class="pagination-Buttonclock">
+            <span class="pageLables">Select Page </span>
+            <select class="paginationDropdown" [ngModel]="currentPage" (ngModelChange)="updatePage($event)">
+                <ng-container *ngFor="let page of totalPages">
+                    <option [ngValue]="page">{{page}}</option>
+                </ng-container>
+            </select>
+        </div>
+        <div class="pagination-Buttonclock">
+            <span class="pageLables">Record Per Page </span>
+            <select class="paginationDropdown" [ngModel]="pageSize" (ngModelChange)="updatePageSize($event)">
+                <ng-container *ngFor="let pageSize of PageSizeValues">
+                    <option [ngValue]="pageSize">{{pageSize}}</option>
+                </ng-container>
+            </select>
+        </div>
+    </div>
+    <ng-container *ngIf="isError;then errorMessage else showRecords">
+
+    </ng-container>
+    <ng-template #errorMessage>
+        <h1 class="error">{{errorText}}</h1>
+    </ng-template>
+    <ng-template #showRecords>
+        <div class="data-block">
+            <ng-container *ngFor="let employee of employeeResponse.empdata; let i = index">
+                <div>
+                    <h1 class="employee-name">{{'"'}}{{employee.Full_Name || '- - -'}}{{'"'}}</h1>
+                    <ul class="employee-card">
+                        <li>
+                            <span class="data-label">Employee ID: </span><span class="data-value">{{employee.Employee_ID
+                                || '- - -'}}</span>
+                        </li>
+                        <li>
+                            <span class="data-label">Job Title: </span><span class="data-value">{{employee.Job_Title ||
+                                '- - -'}}</span>
+                        </li>
+                        <li>
+                            <span class="data-label">Department: </span><span class="data-value">{{employee.Department
+                                || '- - -'}}</span>
+                        </li>
+                        <li>
+                            <span class="data-label">Country: </span><span class="data-value">{{employee.Country || '- -
+                                -'}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <button class="DetailsButton" (click)="redirectToDetailPage(employee)">
+                        Click Here For Employee Details!</button>
+                </div>
+            </ng-container>
+        </div>
+    </ng-template>
+
+</div>

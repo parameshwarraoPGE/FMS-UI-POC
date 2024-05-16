@@ -1,0 +1,93 @@
+.signIn-block{
+    padding: 3em;
+    border: 2px solid #FF8E8E;
+    margin: 0.6em;
+}
+
+.loginHeader{
+    text-decoration: underline;
+    font-family: catchyHeader;
+  }
+
+  .input_bloc {    
+    padding: 0.2em;
+    font-weight: 700;
+  }
+
+
+  .inputLabel{
+    text-decoration: underline;
+  }
+
+  .inputbox{
+    width: 60%;
+    border-radius: 7px;
+    border: 1px solid grey;
+  }
+
+  $loginButtonColor:#71d6cd;
+.loginButton{
+  margin-top: 0.4em;
+    padding: 0.3em;
+    border: 1px solid white;
+    background-color: $loginButtonColor;
+    color: black;
+    font-weight: 400;
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover{
+      color:lighten($loginButtonColor,10%) !important;
+      background-color:#4BA2E5;
+      transition: all 0.3s ease-out;
+  }
+}
+
+.login-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.showPassword-block{
+    padding: 0.2em;
+    display: flex;
+    flex-direction: row;
+}
+
+.password-checkbox{
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    cursor: pointer;
+}
+
+.show-passwordText{
+    padding-left: 0.3em;
+}
+
+.invalid-credentails{
+    text-align: center;
+    color: red;
+}
+
+.errorMessage{
+  color: red;
+}
+
+$signUpButton:#b55cc7;
+.signUpButton{
+  margin-top: 0.4em;
+  padding: 0.3em;
+    border: 1px solid white;
+    background-color: $signUpButton;
+    color: black;
+    font-weight: 400;
+    border-radius: 8px;
+    cursor: pointer;
+    &:hover{
+      color:lighten($signUpButton,10%) !important;
+      background-color:#0e314b;
+      transition: all 0.3s ease-out;
+  }
+
+}
