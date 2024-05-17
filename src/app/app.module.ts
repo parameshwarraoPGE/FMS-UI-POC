@@ -15,12 +15,14 @@ import { LoadingInterceptor } from './shared/service/loading-interceptor.service
 import { TokenInterceptor } from './shared/service/token-interceptor.service';
 import { FileListModule } from './list/list.module';
 import { HeaderComponent } from './core/components/header/header.component';
+import { FooterComponent } from './core/components/footer/footer.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent        
+    HeaderComponent,
+    FooterComponent        
   ],
   imports: [
     BrowserModule,
