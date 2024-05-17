@@ -10,23 +10,23 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './user/login/login.component';
 
 import { UserModule } from './user/user.module';
-import { EmployeeService } from './shared/service/employee.service';
+import { FileManagementService } from './shared/service/file-management.service';
 import { LoadingInterceptor } from './shared/service/loading-interceptor.service';
 import { TokenInterceptor } from './shared/service/token-interceptor.service';
 import { FileListModule } from './list/list.module';
 import { HeaderComponent } from './core/components/header/header.component';
 import { FooterComponent } from './core/components/footer/footer.component';
+import { CoreModule } from './core/core.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    FooterComponent        
+    AppComponent           
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,  
+    HttpClientModule,
+    CoreModule,  
     UserModule,
     FileListModule,    
     RouterModule.forRoot([
@@ -36,7 +36,7 @@ import { FooterComponent } from './core/components/footer/footer.component';
       { path: '**', component: LoginComponent }   
     ])        
   ],
-  providers: [EmployeeService,
+  providers: [FileManagementService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,

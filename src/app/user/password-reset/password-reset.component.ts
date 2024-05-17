@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { EmployeeService } from '../../shared/service/employee.service';
+import { FileManagementService } from '../../shared/service/file-management.service';
 import { userExistResponse } from '../../shared/models/user.model';
 
 @Component({
@@ -29,20 +29,20 @@ export class PasswordResetComponent implements OnInit {
 
   //flag to see user has already signed in or not
   get hasUserLoggedin(){
-    return this._EmployeeService.isUserAuthenticated;
+    return this.fileManagementService.isUserAuthenticated;
 
   }
 
-  constructor(private _FormBuilder: UntypedFormBuilder,
-    private _router: Router,
-    private _EmployeeService: EmployeeService) { }
+  constructor(private untypedFormBuilder: UntypedFormBuilder,
+    private router: Router,
+    private fileManagementService: FileManagementService) { }
 
   ngOnInit(): void {
-    this.userValidationForm = this._FormBuilder.group({      
+    this.userValidationForm = this.untypedFormBuilder.group({      
       email: ['', [Validators.required, Validators.email]],
       secertKey: ['', Validators.required]
     });
-    this.newPasswordForm = this._FormBuilder.group({     
+    this.newPasswordForm = this.untypedFormBuilder.group({     
       updatedPassword: ['', Validators.required]
     });
   }
@@ -76,7 +76,7 @@ export class PasswordResetComponent implements OnInit {
       //make api call
       let formvalue = this.userValidationForm.value;
       let {email,secertKey} = formvalue;
-       this._EmployeeService.validateUser(email,secertKey).subscribe({
+       this.fileManagementService.validateUser(email,secertKey).subscribe({
         next:(data)=>{
           this.isError = false;
           this.authenticatedUserResponse = <userExistResponse>data;
@@ -102,12 +102,12 @@ export class PasswordResetComponent implements OnInit {
     if(this.newPasswordForm.valid){
       let formVal = this.newPasswordForm.value;
       let {updatedPassword } =formVal;
-      this._EmployeeService.changeUserPassword(this.authenticatedUserResponse.userData._id,updatedPassword).subscribe({
+      this.fileManagementService.changeUserPassword(this.authenticatedUserResponse.userData._id,updatedPassword).subscribe({
         next:(data)=>{
           this.isError = false;
           this.updatedInfo = data.message;
           setTimeout(() => {
-            this._router.navigate(['/List']);
+            this.router.navigate(['/List']);
           },1000);
 
         },
@@ -125,7 +125,7 @@ export class PasswordResetComponent implements OnInit {
   }
 
   redirectToSignup(){
-    this._router.navigate(['/sign-up']);
+    this.router.navigate(['/sign-up']);
   }
 
 }

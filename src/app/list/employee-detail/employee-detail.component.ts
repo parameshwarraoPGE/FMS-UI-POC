@@ -1,7 +1,7 @@
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { EmployeeService } from '../../shared/service/employee.service';
+import { FileManagementService } from '../../shared/service/file-management.service';
 import { detailResponse, employeeObject } from '../../shared/models/employee.model';
 import { CreateEmployeeComponent } from '../create-employee/create-employee.component';
 import { UntypedFormBuilder } from '@angular/forms';
@@ -32,7 +32,7 @@ export class EmployeeDetailComponent implements OnInit, AfterViewInit, AfterView
   constructor(private _activatedRoute: ActivatedRoute,
     private _router: Router,
     private _location: Location,
-    private _EmployeeService: EmployeeService,
+    private _EmployeeService: FileManagementService,
     private _FormBuilder: UntypedFormBuilder) {
 
   }

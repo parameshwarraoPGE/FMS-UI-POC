@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { environment } from './../../../environments/environment';
-import { Observable, catchError, throwError, forkJoin, BehaviorSubject, ReplaySubject } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { Observable, catchError, throwError, forkJoin, BehaviorSubject } from 'rxjs';
 import { userRequestBody, authenicationStatus } from '../models/user.model';
 import { createEmployeeReqbody, empoloyeeListReq, updateEmployeeReqBody } from '../models/employee.model';
 
@@ -10,7 +10,7 @@ import { createEmployeeReqbody, empoloyeeListReq, updateEmployeeReqBody } from '
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService {
+export class FileManagementService {
 
   //flag to check if user authenticated
   public isUserAuthenticated: boolean = false;

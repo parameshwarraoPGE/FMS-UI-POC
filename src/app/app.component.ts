@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '
 import { Router } from '@angular/router';
 import { LoadingServiceService } from './shared/service/loading-service.service';
 import { Subscription } from 'rxjs';
-import { EmployeeService } from './shared/service/employee.service';
+import { FileManagementService } from './shared/service/file-management.service';
 import { authenicationStatus } from './shared/models/user.model';
 
 @Component({
@@ -15,14 +15,14 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   router: string = "";
   showGridSpinner: boolean = false;
   constructor(private _router: Router,
-    private _LoadingServiceService: LoadingServiceService,
-    private _EmployeeService: EmployeeService,    
+    private loadingServiceService: LoadingServiceService,
+    private fileManagementService: FileManagementService,    
     private cdRef: ChangeDetectorRef
   ) {
 
   }
   ngAfterViewInit(): void {
-    this.sub = this._LoadingServiceService.loadingStatus.subscribe((loadingStat) => {
+    this.sub = this.loadingServiceService.loadingStatus.subscribe((loadingStat) => {
       this.showGridSpinner = loadingStat;
       this.cdRef.detectChanges();
     });   
@@ -42,16 +42,16 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   get isUserAuthenticated() {
-    return this._EmployeeService.isUserAuthenticated;
+    return this.fileManagementService.isUserAuthenticated;
   }
 
 
-  title = 'Employee Database';
+
   expandResponsiveMenu: boolean = false;
 
   public signOut() {
     sessionStorage.clear();
-    this._EmployeeService.isUserAuthenticated = false;
+    this.fileManagementService.isUserAuthenticated = false;
     this._router.navigate(['/']);
     window.location.reload();
   }

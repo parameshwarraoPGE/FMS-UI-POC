@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { EmployeeService } from '../../shared/service/employee.service';
+import { FileManagementService } from '../../shared/service/file-management.service';
 import { createEmployeeReqbody, employeeObject, updateEmployeeReqBody } from '../../shared/models/employee.model';
 
 import { DateTime } from 'luxon';
@@ -29,7 +29,7 @@ export class CreateEmployeeComponent implements OnInit {
 
   constructor(private _FormBuilder: UntypedFormBuilder,
     private _router: Router,
-    private _EmployeeService: EmployeeService) { }
+    private _EmployeeService: FileManagementService) { }
 
   ngOnInit(): void {
     this.createEmployeeForm = this._FormBuilder.group({

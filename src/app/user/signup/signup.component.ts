@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { userRequestBody } from '../../shared/models/user.model';
-import { EmployeeService } from '../../shared/service/employee.service';
+import { FileManagementService } from '../../shared/service/file-management.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,12 +16,12 @@ export class SignupComponent implements OnInit {
   signupForm: UntypedFormGroup = new UntypedFormGroup({});
   isError:boolean = false;
   constructor(
-    private _FormBuilder: UntypedFormBuilder,
-    private _router: Router,
-    private _EmployeeService: EmployeeService) { }
+    private untypedFormBuilder: UntypedFormBuilder,
+    private router: Router,
+    private fileManagementService: FileManagementService) { }
 
   ngOnInit(): void {
-    this.signupForm = this._FormBuilder.group({
+    this.signupForm = this.untypedFormBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -47,16 +47,16 @@ export class SignupComponent implements OnInit {
       let userdetails: userRequestBody = new userRequestBody();
       userdetails = <userRequestBody>this.signupForm.value;
 
-      this._EmployeeService.signUpUsers(userdetails).subscribe({
+      this.fileManagementService.signUpUsers(userdetails).subscribe({
         next: (data) => {
           if (data.token) {
             //set auth token here
             sessionStorage.setItem('authToken', data.token); 
-            this._EmployeeService.userAuthenicationStats.next({
+            this.fileManagementService.userAuthenicationStats.next({
               hasAuthenticationCheck:false,
               isAuthenticated:true
             });           
-            this._router.navigate(['/List']);
+            this.router.navigate(['/List']);
           }
 
         },
@@ -75,7 +75,7 @@ export class SignupComponent implements OnInit {
   }
 
   redirectToSignIn() {
-    this._router.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
 
 }

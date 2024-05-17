@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { employeeObject, employeeResponse, empoloyeeListReq } from '../../shared/models/employee.model';
-import { EmployeeService } from '../../shared/service/employee.service';
+import { FileManagementService } from '../../shared/service/file-management.service';
 import { Router } from '@angular/router';
 import { Subscription, debounceTime, fromEvent } from 'rxjs';
 
@@ -49,7 +49,7 @@ export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('empIDSearchText', { static: false }) empIDSearchTextEle: ElementRef = {} as ElementRef;
 
-  constructor(private _EmployeeService: EmployeeService, private _router: Router) { }
+  constructor(private _EmployeeService: FileManagementService, private _router: Router) { }
   ngOnDestroy(): void {
     if (this.searchTextSub) {
       this.searchTextSub.unsubscribe();

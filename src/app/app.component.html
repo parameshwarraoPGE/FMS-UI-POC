@@ -1,38 +1,6 @@
-<section *ngIf="showGridSpinner">
-	<div class="overlay"></div>
-	<div class="loading-spinnerPosition">
-		<div class="loader"></div>
-	</div>
-</section>
-
+<app-spinner *ngIf="showGridSpinner"></app-spinner>
 <app-header></app-header>
 
-<!--blog space-->
-<div class="blog-container">
-  <!--navigation Container-->
-<div class="nav-container" *ngIf="isUserAuthenticated">
-  <div class="nav-section">
-    <div class="responsive-menu">
-      <span class="responsive-text">MENU</span>
-      <span class="responsive-text">       
-        <button type="button" class="navbar-toggle" (click)="expandResponsiveMenu = !expandResponsiveMenu">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </span>
-    </div>
-    <div class="nav-menu" [ngClass]="expandResponsiveMenu ?'is-active' : ''">      
-        <a class="nav-link" [routerLink]="['/List']"  [routerLinkActive]="['active']">Employee List</a>      
-        <a class="nav-link" [routerLink]="['/createEmployee']" [routerLinkActive]="['active']">Create Employee</a>
-        <a class="nav-link" [routerLink]="['/employeeChat']" [routerLinkActive]="['active']">Employee Channel</a>
-        <a class="nav-link" [routerLink]="['/pwd-reset']" [routerLinkActive]="['active']">Reset Password</a>
-        <a class="nav-link" (click)="signOut()">Sign out</a>              
-    </div>
-  </div>
-</div> 
-
-<!--blog section-->
 <div class="main-container">
   <router-outlet></router-outlet>
 </div>

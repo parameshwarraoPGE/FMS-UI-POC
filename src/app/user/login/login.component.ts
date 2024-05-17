@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {EmployeeService} from '../../shared/service/employee.service';
+import {FileManagementService} from '../../shared/service/file-management.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   public errorMessage:string ="";
   
 
-  constructor(private _EmployeeService:EmployeeService, private _router : Router) { }
+  constructor(private _EmployeeService:FileManagementService, private _router : Router) { }
 
   ngOnInit(): void {
     let authToken = sessionStorage.getItem('authToken');
