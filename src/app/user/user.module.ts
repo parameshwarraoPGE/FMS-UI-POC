@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { UserRoutingModule } from './user-routing.module';
+import { UserPageComponent } from './pages/user-page/user-page.component';
 
 export const USER_IMPORT = [
   CommonModule,
   FormsModule,
   ReactiveFormsModule,
-  RouterModule.forChild([
-    { path: 'sign-up', component: SignupComponent },
-    { path: 'pwd-reset', component: PasswordResetComponent }
-  ])
+  UserRoutingModule
 ];
 
 
 export const USER_DIRECTIVES = [
+  UserPageComponent,
   LoginComponent,
   SignupComponent,
   PasswordResetComponent

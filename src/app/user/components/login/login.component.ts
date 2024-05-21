@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FileManagementService} from '../../shared/service/file-management.service';
+import {FileManagementService} from '../../../shared/service/file-management.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',

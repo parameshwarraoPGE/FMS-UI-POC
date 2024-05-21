@@ -4,19 +4,12 @@ import { RouterModule } from '@angular/router';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-
-
-
-import { LoginComponent } from './user/login/login.component';
-
-import { UserModule } from './user/user.module';
 import { FileManagementService } from './shared/service/file-management.service';
 import { LoadingInterceptor } from './shared/service/loading-interceptor.service';
 import { TokenInterceptor } from './shared/service/token-interceptor.service';
 import { FileListModule } from './list/list.module';
-import { HeaderComponent } from './core/components/header/header.component';
-import { FooterComponent } from './core/components/footer/footer.component';
 import { CoreModule } from './core/core.module';
+import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
@@ -27,14 +20,8 @@ import { CoreModule } from './core/core.module';
     BrowserModule,
     HttpClientModule,
     CoreModule,  
-    UserModule,
     FileListModule,    
-    RouterModule.forRoot([
-      { path: 'login', component: LoginComponent},         
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: '*', component: LoginComponent },
-      { path: '**', component: LoginComponent }   
-    ])        
+    AppRoutingModule       
   ],
   providers: [FileManagementService,
     {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { userRequestBody } from '../../shared/models/user.model';
-import { FileManagementService } from '../../shared/service/file-management.service';
+import { userRequestBody } from '../../../shared/models/user.model';
+import { FileManagementService } from '../../../shared/service/file-management.service';
 
 @Component({
   selector: 'app-signup',

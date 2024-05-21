@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FileManagementService } from '../../shared/service/file-management.service';
-import { userExistResponse } from '../../shared/models/user.model';
+import { FileManagementService } from '../../../shared/service/file-management.service';
+import { userExistResponse } from '../../../shared/models/user.model';
 
 @Component({
   selector: 'app-password-reset',
