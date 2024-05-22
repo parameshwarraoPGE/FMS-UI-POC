@@ -1,6 +1,4 @@
-.section-wrapper{
-  min-height: calc(100vh - 45px);
-}
+
 
 .signIn-block{
     padding: 3em;    
@@ -51,8 +49,7 @@
 .login-container{
     display: flex;
     justify-content: center;
-    flex-direction: row;
-   
+    flex-direction: row;   
 }
 
 .showPassword-block{

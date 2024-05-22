@@ -1,39 +1,50 @@
-<section class="section-wrapper">
-<div class="login-container bg-white">
-    <div class="signIn-block">
-        <h3 class="loginHeader">File Mangement System Login!</h3>
+<div class="d-flex justify-content-center">
+    <div class="signIn-block bg-body-secondary">        
+        <div class="d-flex flex-row align-items-center">
+            <div class="text-center fs-1">
+                <i class="bi bi-file-earmark-check"></i>
+            </div>
+            <h3 class="loginHeader">File Validation Portal!</h3>
+        </div>
+        <div class="text-center fs-1">
+            <i class="bi bi-person-circle"></i>
+        </div>
+        <div class="text-center">
+           <span><h4>Sign-In</h4></span>
+        </div>
+        <h5 class="text-center text-danger" *ngIf="isPasswordError">{{errorMessage}}!</h5>        
 
-        <h5 class="invalid-credentails" *ngIf="isPasswordError">{{errorMessage}}!</h5>
-
-        <div class="input_bloc">
-            <div>
-                <span class="inputLabel"> User Name </span>
+        <div class="row mb-3">            
+            <div class="col">
+                <label for="loginInput" class="form-label">User Name</label>
+                <input type="text" id="loginInput" placeholder="Enter your email!" class="form-control" [(ngModel)]="username" #userNameVal="ngModel" required/>
             </div>
             <div>
-                <input type="text" placeholder="Enter your email!" class="inputbox" [(ngModel)]="username" #userNameVal="ngModel" required/>
-            </div>
-            <div>
-                <span class="errorMessage" *ngIf="(userNameVal.invalid && (userNameVal.dirty || userNameVal.touched))">Please enter username!! </span>
+                <span class="text-danger" *ngIf="(userNameVal.invalid && (userNameVal.dirty || userNameVal.touched))">Please enter username!! </span>
             </div>
         </div>
 
 
 
-        <div class="input_bloc">
-            <div>
-                <span class="inputLabel">Password </span>
-            </div>
-            <div>
-                <input class="inputbox" (keyup.enter)="submitHandler()" placeholder="Enter your password!" [type]="passwordShow ? 'text' : 'password'" [(ngModel)]="password" #passwordFeild="ngModel" required/>                
+        <div class="row mb-2">           
+            <div class="col">
+                <label for="loginInput" class="form-label">Password</label>
+                <input class="inputbox" class="form-control" (keyup.enter)="submitHandler()" placeholder="Enter your password!" [type]="passwordShow ? 'text' : 'password'" [(ngModel)]="password" #passwordFeild="ngModel" required/>                
             </div>
             <div>
                 <span class="errorMessage" *ngIf="(passwordFeild.invalid && (passwordFeild.dirty || passwordFeild.touched))">Please enter password!! </span>
             </div>
-            <div class="showPassword-block">               
-                <input type="checkbox" class="password-checkbox" [(ngModel)]="passwordShow" >
-                <span class="show-passwordText">Show Password!</span>
+        </div>
+        <div class="row mb-3">
+            <div class="col">               
+                <input type="checkbox" role="button" id="showPassword" class="form-check-input" [(ngModel)]="passwordShow" >
+                <label class="form-check-label" for="showPassword">
+                    Show Password!
+                 </label>
             </div>
         </div>
+            
+        
 
         <div>
             <button class="loginButton" (click)="submitHandler()">
@@ -51,5 +62,3 @@
         </div>
     </div>
 </div>
-
-</section>

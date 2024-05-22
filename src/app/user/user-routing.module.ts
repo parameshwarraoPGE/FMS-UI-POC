@@ -9,18 +9,23 @@ import { PasswordResetComponent } from './components/password-reset/password-res
 
 const routes: Routes = [
 { 
-    path: "",    
-    pathMatch: 'full',
-    redirectTo:'login',    
-},
-{ 
-    path: 'login', component: LoginComponent
-},
-{ 
-    path: 'sign-up', component: SignupComponent 
-},
-{ 
-    path: 'pwd-reset', component: PasswordResetComponent 
+    path: "",   
+    component: UserPageComponent,    
+    children:[
+        { 
+            path: 'login', component: LoginComponent
+        },
+        { 
+            path: 'sign-up', component: SignupComponent 
+        },
+        { 
+            path: 'pwd-reset', component: PasswordResetComponent 
+        },
+        { 
+            path: '', pathMatch:'full',
+            redirectTo: 'login'
+        }
+    ]    
 },
 {   
     path: '**', redirectTo: 'notFound'
