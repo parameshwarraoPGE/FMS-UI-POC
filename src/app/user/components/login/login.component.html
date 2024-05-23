@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
-    <div class="signIn-block bg-body-secondary">        
-        <div class="d-flex flex-row align-items-center">
+    <div class="cardBlock bg-body-secondary p-3 m-3">        
+        <div class="d-flex flex-row align-items-center justify-content-center">
             <div class="text-center fs-1">
                 <i class="bi bi-file-earmark-check"></i>
             </div>
@@ -32,7 +32,7 @@
                 <input class="inputbox" class="form-control" (keyup.enter)="submitHandler()" placeholder="Enter your password!" [type]="passwordShow ? 'text' : 'password'" [(ngModel)]="password" #passwordFeild="ngModel" required/>                
             </div>
             <div>
-                <span class="errorMessage" *ngIf="(passwordFeild.invalid && (passwordFeild.dirty || passwordFeild.touched))">Please enter password!! </span>
+                <span class="text-danger" *ngIf="(passwordFeild.invalid && (passwordFeild.dirty || passwordFeild.touched))">Please enter password!! </span>
             </div>
         </div>
         <div class="row mb-3">
@@ -43,22 +43,36 @@
                  </label>
             </div>
         </div>
+
+        <div class="row mb-3">
+            <div class="col text-center">
+                <a role="button" class="link-primary text-decoration-none" (click)="forgotPwdHandler()">Forgot password?</a>
+            </div>
+
+        </div>
             
         
 
-        <div>
-            <button class="loginButton" (click)="submitHandler()">
-                Login</button>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="button" (click)="submitHandler()">
+                      Login</button>
+                </div>
+            </div>            
         </div>
+        
 
-        <div>
-            <button class="loginButton" (click)="forgotPwdHandler()">
-                Forgot password</button>
+        <div class="row">
+            <div class="col">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary" (click)="signUpButtonHandler()">
+                        Sign Up</button>
+                </div>
+            </div>
         </div>
+        
 
-        <div>
-            <button class="signUpButton" (click)="signUpButtonHandler()">
-                Sign UP!</button>
-        </div>
+        
     </div>
 </div>
