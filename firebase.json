@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist\\filemanagement-poc\\browser",
+    "public": "dist/filemanagement-poc/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
