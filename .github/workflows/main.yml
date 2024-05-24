@@ -1,6 +1,6 @@
 name: Build And Deploy
 
-# Run workflow manually
+on:
   workflow_dispatch:
 
 jobs:
