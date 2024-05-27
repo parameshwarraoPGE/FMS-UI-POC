@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FileManagementService} from '../../../shared/service/file-management.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,28 +15,31 @@ export class LoginComponent implements OnInit {
   public errorMessage:string ="";
   
 
-  constructor(private _EmployeeService:FileManagementService, private _router : Router) { }
+  constructor(
+    private fileManagementService:FileManagementService, 
+    private router : Router, 
+    private activatedRoute : ActivatedRoute) { }
 
   ngOnInit(): void {
     let authToken = sessionStorage.getItem('authToken');
     if(authToken){
-      this._router.navigate(['/List']);
+      this.router.navigate(['/List']);
     }
   }
   
 
   public submitHandler(){
    
-    this._EmployeeService.userLogin(this.username,this.password).subscribe({
+    this.fileManagementService.userLogin(this.username,this.password).subscribe({
       next: (data)=>{
         if(data.token){
           //set auth token here
           sessionStorage.setItem('authToken',data.token); 
-          this._EmployeeService.userAuthenicationStats.next({
+          this.fileManagementService.userAuthenicationStats.next({
             hasAuthenticationCheck:false,
             isAuthenticated:true
           });         
-          this._router.navigate(['/List']);
+          this.router.navigate(['/List']);
         }
 
       },
@@ -52,11 +55,11 @@ export class LoginComponent implements OnInit {
   }
 
   public signUpButtonHandler(){
-    this._router.navigate(['/sign-up']);
+    this.router.navigate(['../sign-up'], {relativeTo: this.activatedRoute});
   }
 
   public forgotPwdHandler(){
-    this._router.navigate(['/pwd-reset']);
+    this.router.navigate(['../pwd-reset'],{relativeTo: this.activatedRoute });
 
    }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FileManagementService } from '../../../shared/service/file-management.service';
 import { userExistResponse } from '../../../shared/models/user.model';
 
@@ -34,8 +34,9 @@ export class PasswordResetComponent implements OnInit {
   }
 
   constructor(private untypedFormBuilder: UntypedFormBuilder,
-    private router: Router,
-    private fileManagementService: FileManagementService) { }
+    private router : Router,
+    private fileManagementService: FileManagementService,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.userValidationForm = this.untypedFormBuilder.group({      
@@ -125,7 +126,7 @@ export class PasswordResetComponent implements OnInit {
   }
 
   redirectToSignup(){
-    this.router.navigate(['/sign-up']);
+    this.router.navigate(['../sign-up'], {relativeTo: this.activatedRoute });
   }
 
 }
