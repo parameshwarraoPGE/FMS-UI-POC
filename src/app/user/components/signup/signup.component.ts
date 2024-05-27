@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { userRequestBody } from '../../../shared/models/user.model';
 import { FileManagementService } from '../../../shared/service/file-management.service';
 
@@ -18,7 +18,8 @@ export class SignupComponent implements OnInit {
   constructor(
     private untypedFormBuilder: UntypedFormBuilder,
     private router: Router,
-    private fileManagementService: FileManagementService) { }
+    private fileManagementService: FileManagementService,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.signupForm = this.untypedFormBuilder.group({
@@ -75,7 +76,7 @@ export class SignupComponent implements OnInit {
   }
 
   redirectToSignIn() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['../login'],{relativeTo: this.activatedRoute });
   }
 
 }
