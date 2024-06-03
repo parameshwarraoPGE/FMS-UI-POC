@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { employeeObject, employeeResponse, empoloyeeListReq } from '../../../shared/models/employee.model';
+import { Batch, BatchListResponse, BatchListRequest } from '../../../shared/models/file.model';
 import { FileManagementService } from '../../../shared/service/file-management.service';
 import { Router } from '@angular/router';
 import { Subscription, debounceTime, fromEvent } from 'rxjs';
@@ -12,8 +12,8 @@ import { Subscription, debounceTime, fromEvent } from 'rxjs';
 })
 export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  public employeeListRequestBody: empoloyeeListReq = new empoloyeeListReq();
-  public employeeResponse: employeeResponse = new employeeResponse();
+  public batchListRequest: BatchListRequest = new BatchListRequest();
+  public batchListResponse: BatchListResponse = new BatchListResponse();
   public totalCount: number = 0;
 
   public totalPages: number[] = [];
@@ -26,89 +26,69 @@ export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
   public errorText: string = "";
   public isError: boolean = false;
 
-  public employeeIdSearchText: string = "";
-  public employeeNameSearchText: string = "";
+  public searchByBatchName: string = "";
+  public searchByCreatedBy: string = "";
 
-  public allDepartmentOptions: string[] = [];
-  public allBussinessUnitOptions: string[] = [];
-  public allCountryOptions: string[] = [];
-  public allCityOptions: string[] = [];
-  public allGenderOptions: string[] = [];
-  public allEthnicityOptions: string[] = [];
-
-  public selectedDepartmentOption: string = "";
-  public selectedBuOption: string = "";
-  public selectedCountryOption: string = "";
-  public selectedCityOption: string = "";
-  public selectedGenderOption: string = "";
-  public selectedEthnicityOption: string = "";
+  
 
   public searchTextSub: Subscription = new Subscription();
 
-  @ViewChild('nameSearchText', { static: false }) nameSearchTextEle: ElementRef = {} as ElementRef;
+  @ViewChild('batchNameSearchText', { static: false }) batchNameTextRef: ElementRef = {} as ElementRef;
 
-  @ViewChild('empIDSearchText', { static: false }) empIDSearchTextEle: ElementRef = {} as ElementRef;
+  @ViewChild('batchCreatedBySearch', { static: false }) createdByTextref: ElementRef = {} as ElementRef;
 
-  constructor(private _EmployeeService: FileManagementService, private _router: Router) { }
+  constructor(private fileManagementService: FileManagementService, private _router: Router) { }
   ngOnDestroy(): void {
     if (this.searchTextSub) {
       this.searchTextSub.unsubscribe();
     }
   }
   ngAfterViewInit(): void {
-    this.getEmployeeList();
-    this.getAllOptions();
+    this.getBatchList();    
     this.subscribeToSearchTextEvents();
   }
 
   subscribeToSearchTextEvents() {
-    this.searchTextSub = fromEvent(this.nameSearchTextEle.nativeElement, 'keyup').pipe(debounceTime(1200)).subscribe((element) => {
+    this.searchTextSub = fromEvent(this.batchNameTextRef.nativeElement, 'keyup').pipe(debounceTime(1200)).subscribe((element) => {
       if (element) {
-        this.employeeListRequestBody.Full_Name = <string>(element as any).target.value;
-        this.getEmployeeList();
+        this.batchListRequest.batchName = <string>(element as any).target.value;
+        this.getBatchList();
       }
-
     });
 
     this.searchTextSub.add(
-      fromEvent(this.empIDSearchTextEle.nativeElement, 'keyup').pipe(debounceTime(1200)).subscribe((element) => {
+      fromEvent(this.createdByTextref.nativeElement, 'keyup').pipe(debounceTime(1200)).subscribe((element) => {
         if (element) {
-          this.employeeListRequestBody.Employee_ID = <string>(element as any).target.value;
-          this.getEmployeeList();
+          this.batchListRequest.createdBy = <string>(element as any).target.value;
+          this.getBatchList();
         }
-
       })
     );
+    
   }
 
-  public resetAllFeilds() {
-    this.selectedDepartmentOption = "";
-    this.selectedBuOption = "";
-    this.selectedCountryOption = "";
-    this.selectedCityOption = "";
-    this.selectedGenderOption = "";
-    this.selectedEthnicityOption = "";
-    this.employeeNameSearchText = "";
-    this.employeeIdSearchText = "";
+  public clearSearch() {    
+    this.searchByBatchName = "";
+    this.searchByCreatedBy = "";   
 
-    this.employeeListRequestBody = new empoloyeeListReq();
-    this.pageSize = this.employeeListRequestBody.recordPerPage;
-    this.getEmployeeList(true);
+    this.batchListRequest = new BatchListRequest();
+    this.pageSize = this.batchListRequest.recordPerPage;
+    this.getBatchList(true);
   }
 
-  getEmployeeList(resetPagination: boolean = true) {
+  getBatchList(resetPagination: boolean = true) {
     this.isError = false;
 
-    this.employeeListRequestBody.recordPerPage = this.pageSize;
+    this.batchListRequest.recordPerPage = this.pageSize;
 
     if (resetPagination) {
       this.pageIndex = 0;
       this.currentPage = 1;
-      this.employeeListRequestBody.pageIndex = 0;
+      this.batchListRequest.pageIndex = 0;
     }
     else {
       this.pageIndex = this.currentPage - 1;
-      this.employeeListRequestBody.pageIndex = this.pageIndex < 0 ? 0 : this.pageIndex;
+      this.batchListRequest.pageIndex = this.pageIndex < 0 ? 0 : this.pageIndex;
     }
 
 
@@ -116,16 +96,16 @@ export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
 
-    this._EmployeeService.getEmployeeList(this.employeeListRequestBody).subscribe({
+    this.fileManagementService.getBatchList(this.batchListRequest).subscribe({
       next: (data) => {
-        this.employeeResponse = data;
-        if (this.employeeResponse.empdata.length == 0) {
+        this.batchListResponse = data;
+        if (this.batchListResponse.batchFileData.length == 0) {
           this.isError = true;
           this.errorText = this.errorMessage[0];
           this.updatePagination(0);
         }
         else {
-          this.totalCount = this.employeeResponse.totalCount[0].count;
+          this.totalCount = this.batchListResponse.totalCount[0].count;
           this.updatePagination(this.totalCount);
 
         }
@@ -166,22 +146,22 @@ export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   pageForwardButton() {
     this.currentPage = this.currentPage + 1;
-    this.getEmployeeList(false);
+    this.getBatchList(false);
 
   }
   pageBackwardButton() {
     this.currentPage = this.currentPage - 1;
-    this.getEmployeeList(false);
+    this.getBatchList(false);
 
   }
   updatePage($event: number) {
     this.currentPage = $event;
-    this.getEmployeeList(false);
+    this.getBatchList(false);
   }
 
   updatePageSize($event: number) {
     this.pageSize = $event;
-    this.getEmployeeList(false);
+    this.getBatchList(false);
   }
 
   disableForwardButton() {
@@ -192,67 +172,15 @@ export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
     return false;
   }
 
-  redirectToDetailPage(employee: employeeObject) {
+  redirectToDetailPage(employee: Batch) {
     this._router.navigate(['/Listdetail'], { queryParams: { id: employee._id } });
   }
 
-  public getAllOptions() {
-    this._EmployeeService.getAllSearchOptions().subscribe({
-      next: (data) => {
-        let [
-          departmentoptions,
-          bussinessoptions,
-          countryOptions,
-          cityOptions,
-          genderOptions,
-          ethnicityOptions] = data;
 
 
-
-        this.allDepartmentOptions = departmentoptions;
-        this.allBussinessUnitOptions = bussinessoptions;
-        this.allCountryOptions = countryOptions;
-        this.allCityOptions = cityOptions;
-        this.allGenderOptions = genderOptions;
-        this.allEthnicityOptions = ethnicityOptions;
-
-
-      },
-      error: (err) => {
-        console.log(err);
-      }
-
-    })
-  }
-
-  public onDepartmentSelect(department: string) {
-    this.employeeListRequestBody.Department = department;
-    this.getEmployeeList();
-  }
-
-  public onBussinessUnitSelect(bussinessUnit: string) {
-    this.employeeListRequestBody.Business_Unit = bussinessUnit;
-    this.getEmployeeList();
-  }
-
-  public onCountrySelect(country: string) {
-    this.employeeListRequestBody.Country = country;
-    this.getEmployeeList();
-  }
-
-  public onGenderSelect(gender: string) {
-    this.employeeListRequestBody.Gender = gender;
-    this.getEmployeeList();
-  }
-
-  public onEthnicitySelect(ethnicity: string) {
-    this.employeeListRequestBody.Ethnicity = ethnicity;
-    this.getEmployeeList();
-  }
-
-  public onCitySelect(city: string) {
-    this.employeeListRequestBody.City = city;
-    this.getEmployeeList();
+  public onBatchStatus(status: string) {
+    this.batchListRequest.batchStatus = status;
+    this.getBatchList();
   }
 
 }

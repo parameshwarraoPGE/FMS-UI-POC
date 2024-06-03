@@ -1,4 +1,70 @@
-<div class="search-block">
+<section class="section-wrapper">    
+    <section>
+        <div class="d-flex flex-row align-items-center justify-content-center mt-2 mb-3">
+            <div class="text-center fs-1 me-2 mb-3">
+                <i class="bi bi-card-list"></i>
+            </div>
+            <h3 class="specialHeader">Batch List!</h3>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row mb-3">
+                <div class="col-3">
+                    <label for="batchName" class="form-label">Search by Batch Name</label>
+                    <input #batchNameSearchText type="text" id="batchName" placeholder="Enter batch Name!"
+                        class="form-control" [(ngModel)]="searchByBatchName" />
+                </div>
+                <div class="col-3">
+                    <label for="createdBy" class="form-label">Search by Created by</label>
+                    <input #batchCreatedBySearch type="text" id="createdBy" placeholder="Enter name!"
+                        class="form-control" [(ngModel)]="searchByCreatedBy" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="offset-2 col-1">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-secondary" (click)="clearSearch()">
+                            Clear</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section class="mb-3 mt-3 border border-top">
+        <ng-container *ngFor="let batch of batchListResponse.batchFileData; let i = index">
+            
+
+            <div class="d-flex flex-row align-items-center justify-content-center">
+                <div class="card m-3 card-width">
+                    <div class="card-header">
+                        <h5 class="card-title text-center">{{batch.batchName}}</h5>
+                        <ul>
+                            <li>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{"Batch ID: "}}{{batch._id}}</h6>
+                            </li>
+                            <li>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{"Created By: "}}{{batch.createdBy || " - - -"}}</h6>
+                            </li>
+                        </ul> 
+                    </div>
+                    <div class="card-body">
+                        
+                        
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </ng-container>
+
+    </section>
+</section>
+
+
+<!--<div class="search-block">
 
 </div>
 <div class="list-container">
@@ -225,3 +291,5 @@
     </ng-template>
 
 </div>
+
+-->

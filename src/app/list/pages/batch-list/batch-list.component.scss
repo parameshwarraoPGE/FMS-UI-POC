@@ -159,3 +159,16 @@ $resetbuttonColor:#71d6cd;
         margin: 2px;
     }
 }
+
+/**new **/
+.section-wrapper{
+    min-height: calc(100vh - 45px);
+}
+
+.specialHeader{
+    text-decoration: underline;
+    font-family: catchyHeader;
+}
+.card-width{
+    width: 50%;
+}

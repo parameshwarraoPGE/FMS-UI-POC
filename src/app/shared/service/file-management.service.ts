@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable, catchError, throwError, forkJoin, BehaviorSubject } from 'rxjs';
 import { userRequestBody, authenicationStatus } from '../models/user.model';
-import { createEmployeeReqbody, empoloyeeListReq, updateEmployeeReqBody } from '../models/employee.model';
+import { createEmployeeReqbody, BatchListRequest, updateEmployeeReqBody } from '../models/file.model';
 
 
 
@@ -24,7 +24,7 @@ export class FileManagementService {
   
   
 
-  employeeListURL: string = "api/employee/List";
+  batchListURL: string = "api/batchFile/List";
   createEmployeeURL: string = "api/employee/CreateEmployee";
   employeeDetailURL: string = "api/employee/employeeDetail";
   updateEmployeeURL: string = "api/employee/updateEmployee";
@@ -94,9 +94,9 @@ export class FileManagementService {
   }
 
   //employee
-  public getEmployeeList(employeeListReq: empoloyeeListReq): Observable<any> {
-    let url: string = this.getHttpUrl(this.employeeListURL);
-    return this._httpClient.post(url, employeeListReq).pipe(catchError(this.errorHandler));
+  public getBatchList(batchListRequest: BatchListRequest): Observable<any> {
+    let url: string = this.getHttpUrl(this.batchListURL);
+    return this._httpClient.post(url, batchListRequest).pipe(catchError(this.errorHandler));
   }
 
   public getEmployeeDetail(userReferenceID: string = ""): Observable<any> {
