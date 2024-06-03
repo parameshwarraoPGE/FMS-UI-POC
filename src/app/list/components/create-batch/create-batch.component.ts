@@ -3,26 +3,27 @@ import { FileManagementService } from '../../../shared/service/file-management.s
 import { Batch } from '../../../shared/models/file.model';
 
 @Component({
-  selector: 'app-create-batch',  
+  selector: 'app-create-batch',
   templateUrl: './create-batch.component.html',
   styleUrl: './create-batch.component.scss'
 })
 export class CreateBatchComponent {
-  batchName:string = "";
-  batchId:string = "";
+  batchName: string = "";
+  batchId: string = "";
+  uploadedFiles: Array<string> = [];
 
-  constructor(private fileManagementService: FileManagementService){
+  constructor(private fileManagementService: FileManagementService) {
 
   }
 
-  public create(){
-    if(this.batchName){
+  public create() {
+    if (this.batchName) {
       this.fileManagementService.createBatch(this.batchName).subscribe({
-        next: (data) => {            
-  
-         const batchCreate = data as unknown as Batch;
-         let {batchId} = batchCreate;
-         this.batchId = batchId;
+        next: (data) => {
+
+          const batchCreate = data as unknown as Batch;
+          let { batchId } = batchCreate;
+          this.batchId = batchId;
         },
         error: (err) => {
           //get updated list from firebase storage
@@ -33,37 +34,51 @@ export class CreateBatchComponent {
 
   }
 
-    //file upload
+  //file upload
 
-    public onFileSubmit($event: any) {
-      let { target: { files } } = $event;
-      let valid_files: Array<File> = files;
-      this.sendFilesToGCPStorage(valid_files);
+  public onFileSubmit($event: any) {
+    let { target: { files } } = $event;
+    let valid_files: Array<File> = files;
+    this.sendFilesToGCPStorage(valid_files);
+  }
+
+  public onFileDragAndDrop(filesList: Array<File>) {
+    this.sendFilesToGCPStorage(filesList);
+  }
+
+  public sendFilesToGCPStorage(files: Array<File>) {
+    if (this.batchId) {
+
+      this.fileManagementService.uploadFiles(this.batchId, files).subscribe({
+        next: (data) => {
+
+          //get updated list from firebase storage
+          this.getUploadedBatchFiles();
+        },
+        error: (err) => {
+          //get updated list from firebase storage
+          this.getUploadedBatchFiles();
+        }
+      });
     }
-  
-    public onFileDragAndDrop(filesList: Array<File>) {
-      this.sendFilesToGCPStorage(filesList);
-    }
-  
-    public sendFilesToGCPStorage(files: Array<File>) {
-      if (this.batchId) {
-  
-        this.fileManagementService.uploadFiles(this.batchId, files).subscribe({
-          next: (data) => {            
-  
-            //get updated list from firebase storage
-            this.getUploadedBatchFiles();
-          },
-          error: (err) => {
-            //get updated list from firebase storage
-            this.getUploadedBatchFiles();
-          }
-        });
-      }  
+  }
+
+  public getUploadedBatchFiles() {
+    if (this.batchId) {
+      this.fileManagementService.getBatchDetail(this.batchId).subscribe({
+        next: (data) => {
+
+          const batchCreate = data as unknown as Batch;
+          let { fileList } = batchCreate;
+          this.uploadedFiles = fileList.map(file => file.fileName);
+        },
+        error: (err) => {
+
+        }
+      }
+      );
     }
 
-    public getUploadedBatchFiles(){
-
-    }
+  }
 
 }
