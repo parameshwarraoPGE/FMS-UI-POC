@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Batch, BatchListResponse, BatchListRequest } from '../../../shared/models/file.model';
 import { FileManagementService } from '../../../shared/service/file-management.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, debounceTime, fromEvent } from 'rxjs';
 
 
@@ -37,7 +37,8 @@ export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('batchCreatedBySearch', { static: false }) createdByTextref: ElementRef = {} as ElementRef;
 
-  constructor(private fileManagementService: FileManagementService, private _router: Router) { }
+  constructor(private fileManagementService: FileManagementService, private router: Router, 
+    private activatedRoute : ActivatedRoute) { }
   ngOnDestroy(): void {
     if (this.searchTextSub) {
       this.searchTextSub.unsubscribe();
@@ -173,7 +174,7 @@ export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   redirectToDetailPage(employee: Batch) {
-    this._router.navigate(['/Listdetail'], { queryParams: { id: employee._id } });
+    this.router.navigate(['/Listdetail'], { queryParams: { id: employee._id } });
   }
 
 
@@ -181,6 +182,12 @@ export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
   public onBatchStatus(status: string) {
     this.batchListRequest.batchStatus = status;
     this.getBatchList();
+  }
+  public createBatch(){
+    this.router.navigate(['../createBatch'],{relativeTo: this.activatedRoute });
+  }
+  public batchDetail(id:string){
+    this.router.navigate(['../',id],{relativeTo: this.activatedRoute });
   }
 
 }
