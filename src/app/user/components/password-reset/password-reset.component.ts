@@ -108,7 +108,7 @@ export class PasswordResetComponent implements OnInit {
           this.isError = false;
           this.updatedInfo = data.message;
           setTimeout(() => {
-            this.router.navigate(['/List']);
+            this.router.navigate(['batch/list']);
           },1000);
 
         },

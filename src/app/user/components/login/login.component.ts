@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     let authToken = sessionStorage.getItem('authToken');
     if(authToken){
-      this.router.navigate(['batch/List']);
+      this.router.navigate(['batch/list']);
     }
   }
   
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
             hasAuthenticationCheck:false,
             isAuthenticated:true
           });         
-          this.router.navigate(['./batch/List']);
+          this.router.navigate(['batch/list']);
         }
 
       },

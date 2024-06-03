@@ -57,7 +57,7 @@ export class SignupComponent implements OnInit {
               hasAuthenticationCheck:false,
               isAuthenticated:true
             });           
-            this.router.navigate(['/batch/List']);
+            this.router.navigate(['batch/list']);
           }
 
         },
