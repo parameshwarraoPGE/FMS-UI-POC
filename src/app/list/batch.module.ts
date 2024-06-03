@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BatchRoutingModule } from './batch-routing.module';
 import { BatchDetailComponent } from './pages/batch-detail/batch-detail.component';
 import { CreateBatchComponent } from './components/create-batch/create-batch.component';
+import { FileDragNDropDirective } from '../shared/directives/file-dragDrop.directive';
 
 
 
@@ -14,7 +15,8 @@ import { CreateBatchComponent } from './components/create-batch/create-batch.com
   declarations: [
     BatchListComponent,
     BatchDetailComponent,
-    CreateBatchComponent   
+    CreateBatchComponent,
+    FileDragNDropDirective   
   ],
   imports: [
     CommonModule,

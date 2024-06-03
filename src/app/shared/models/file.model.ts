@@ -1,25 +1,4 @@
-export class createEmployeeReqbody {
-  Employee_ID: string = "";
-  Full_Name: string = "";
-  Job_Title: string = "";
-  Department: string = "";
-  Business_Unit: string = "";
-  Gender: string = "";
-  Ethnicity: string = "";
-  Age: string = "";
-  Hire_Date: string = "";
-  Annual_Salary: string = "";
-  Bonus: string = "";
-  Country: string = "";
-  City: string = "";
-}
 
-export class updateEmployeeReqBody extends createEmployeeReqbody {
-  constructor() {
-    super();
-  }
-  _id: string = "";
-}
 
 export class BatchListRequest {
   batchName: string = "";
@@ -83,10 +62,5 @@ export class TotalCount {
 
 
 
-export class updateEmployeeReqbody extends createEmployeeReqbody {
-  public _id: string = "";
-  constructor() {
-    super();
-  }
-}
+
 
