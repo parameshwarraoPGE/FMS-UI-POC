@@ -9,8 +9,8 @@
 <ng-container *ngIf="enableEdit;then editCmp else detailCmp"></ng-container>
 
 <ng-template #editCmp>
-    <create-employee #createEmpRef [isEdit]="enableEdit"
-        (recordUpdated)="updateEmployeeHandler($event)"></create-employee>
+    <app-create-batch #createEmpRef [isEdit]="enableEdit"
+        (recordUpdated)="updateEmployeeHandler($event)"></app-create-batch>
 </ng-template>
 <ng-template #detailCmp>
 

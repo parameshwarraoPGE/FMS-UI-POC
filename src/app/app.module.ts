@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { FileManagementService } from './shared/service/file-management.service';
 import { LoadingInterceptor } from './shared/service/loading-interceptor.service';
 import { TokenInterceptor } from './shared/service/token-interceptor.service';
-import { FileListModule } from './list/list.module';
+import { BatchModule } from './list/batch.module';
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -19,8 +19,7 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     HttpClientModule,
-    CoreModule,  
-    FileListModule,    
+    CoreModule,      
     AppRoutingModule       
   ],
   providers: [FileManagementService,

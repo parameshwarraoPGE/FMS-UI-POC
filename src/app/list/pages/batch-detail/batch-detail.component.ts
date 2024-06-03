@@ -1,18 +1,18 @@
 import { AfterViewChecked, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { FileManagementService } from '../../shared/service/file-management.service';
-import { detailResponse, employeeObject } from '../../shared/models/employee.model';
-import { CreateEmployeeComponent } from '../create-employee/create-employee.component';
+import { FileManagementService } from '../../../shared/service/file-management.service';
+import { detailResponse, employeeObject } from '../../../shared/models/employee.model';
+import { CreateBatchComponent } from '../../components/create-batch/create-batch.component';
 import { UntypedFormBuilder } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-employee-detail',
-  templateUrl: './employee-detail.component.html',
-  styleUrls: ['./employee-detail.component.scss']
+  selector: 'app-batch-detail',
+  templateUrl: './batch-detail.component.html',
+  styleUrls: ['./batch-detail.component.scss']
 })
-export class EmployeeDetailComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class BatchDetailComponent implements OnInit, AfterViewInit, AfterViewChecked {
   public isError: boolean = false;
 
   public deleteMessageInfo: string = "";
@@ -22,7 +22,7 @@ export class EmployeeDetailComponent implements OnInit, AfterViewInit, AfterView
 
   public id: string = "";
 
-  @ViewChild('createEmpRef', { static: false }) _createEmployeeRef: CreateEmployeeComponent = new CreateEmployeeComponent(this._FormBuilder,
+  @ViewChild('createEmpRef', { static: false }) _createEmployeeRef: CreateBatchComponent = new CreateBatchComponent(this._FormBuilder,
     this._router,
     this._EmployeeService);
 

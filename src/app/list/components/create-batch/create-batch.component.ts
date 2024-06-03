@@ -1,17 +1,17 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FileManagementService } from '../../shared/service/file-management.service';
-import { createEmployeeReqbody, employeeObject, updateEmployeeReqBody } from '../../shared/models/employee.model';
+import { FileManagementService } from '../../../shared/service/file-management.service';
+import { createEmployeeReqbody, employeeObject, updateEmployeeReqBody } from '../../../shared/models/employee.model';
 
 import { DateTime } from 'luxon';
 
 @Component({
-  selector: 'create-employee',
-  templateUrl: './create-employee.component.html',
-  styleUrls: ['./create-employee.component.scss']
+  selector: 'app-create-batch',
+  templateUrl: './create-batch.component.html',
+  styleUrls: ['./create-batch.component.scss']
 })
-export class CreateEmployeeComponent implements OnInit {
+export class CreateBatchComponent implements OnInit {
 
   public errorMessage: string = "";
   createEmployeeForm: UntypedFormGroup = new UntypedFormGroup({});

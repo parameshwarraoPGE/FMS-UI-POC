@@ -1,16 +1,16 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { employeeObject, employeeResponse, empoloyeeListReq } from '../../shared/models/employee.model';
-import { FileManagementService } from '../../shared/service/file-management.service';
+import { employeeObject, employeeResponse, empoloyeeListReq } from '../../../shared/models/employee.model';
+import { FileManagementService } from '../../../shared/service/file-management.service';
 import { Router } from '@angular/router';
 import { Subscription, debounceTime, fromEvent } from 'rxjs';
 
 
 @Component({
-  selector: 'app-employee-list',
-  templateUrl: './employee-list.component.html',
-  styleUrls: ['./employee-list.component.scss']
+  selector: 'app-batch-list',
+  templateUrl: './batch-list.component.html',
+  styleUrls: ['./batch-list.component.scss']
 })
-export class EmployeeListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public employeeListRequestBody: empoloyeeListReq = new empoloyeeListReq();
   public employeeResponse: employeeResponse = new employeeResponse();

@@ -7,6 +7,10 @@ const routes: Routes = [
     path:'user',
     loadChildren: () => import('./user/user.module').then((m) => m.UserModule)
 },
+{
+    path:'batch',
+    loadChildren: () => import('./list/batch-routing.module').then((m) => m.BatchRoutingModule)
+},
 { 
     path: '', 
     redirectTo: 'user', 
