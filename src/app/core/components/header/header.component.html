@@ -29,15 +29,15 @@
                   </ul>               
             </li>
         </ul>        
-        <ul class="navbar-nav">
+        <ul class="navbar-nav" *ngIf="fileManagementService.isUserAuthenticated">
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" data-bs-target="#accountSettings" aria-controls="accountSettings" aria-label="Account Settings" aria-expanded="false">
                   Account
                   <i class="bi bi-gear-fill"></i>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" id="accountSettings">
-                    <li><a class="dropdown-item" href="#">Password Reset <i class="bi bi-unlock-fill"></i></a></li>
-                    <li><a class="dropdown-item" href="#">Log Off <i class="bi bi-power"></i></a></li>                    
+                    <li><a class="dropdown-item" role="button" (click)="redirectToPasswordReset()">Password Reset <i class="bi bi-unlock-fill"></i></a></li>
+                    <li><a class="dropdown-item" role="button" (click)="logOff()">Log Off <i class="bi bi-power"></i></a></li>                    
                   </ul>               
             </li>
         </ul>

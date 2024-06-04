@@ -8,14 +8,14 @@ import { FileManagementService } from './file-management.service';
 })
 export class CheckAuthGuardService implements CanActivate {
 
-  constructor(private _router: Router, private _EmployeeService:FileManagementService) { }
+  constructor(private _router: Router, private fileManagementService:FileManagementService) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean  {
    let authToken = sessionStorage.getItem('authToken');
    if(authToken){
-    this._EmployeeService.isUserAuthenticated = true;    
+    this.fileManagementService.isUserAuthenticated = true;    
     return true;
    }
-   this._EmployeeService.isUserAuthenticated = false;   
+   this.fileManagementService.isUserAuthenticated = false;   
    this._router.navigate(['/']);   
    return false;
   }
