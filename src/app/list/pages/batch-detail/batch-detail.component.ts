@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FileManagementService } from '../../../shared/service/file-management.service';
-import { Batch, FileObject } from '../../../shared/models/file.model';
+import { Batch, FileBase64Reponse, FileObject } from '../../../shared/models/file.model';
 import { Location } from '@angular/common';
+
+declare const PDFObject: any;
 
 @Component({
   selector: 'app-batch-detail',  
@@ -60,6 +62,53 @@ export class BatchDetailComponent implements AfterViewInit {
 
   public onFileSelect(fileObj:FileObject){
     this.selectedFile = fileObj;
+  }
+
+  public async downloadSelectedFile(){
+    if(this.selectedFile){
+      this.fileManagementService.singleFileDownload(this.batchDetail.batchId,this.selectedFile.fileName).subscribe({
+        next: (data) => {
+          let blob = new Blob([data.body], { type: 'application/octet-stream' });       
+         
+
+          var downloadURL = window.URL.createObjectURL(blob);
+          var link = document.createElement('a');
+          link.setAttribute('style', 'display:none;');
+          document.body.appendChild(link);
+          link.href = downloadURL;
+          link.download = `${this.selectedFile.fileName}`;
+          link.target = '_blank';
+          link.click();
+          document.body.removeChild(link);        
+        },
+        error: (err) => {
+          
+        }
+      });
+    }
+  }
+
+  public displayPdf(){
+    if(this.selectedFile.fileName && this.batchDetail.batchId){
+      this.fileManagementService.getFileBase64String(this.batchDetail.batchId,this.selectedFile.fileName).subscribe({
+        next: (data:FileBase64Reponse) => {
+                const { convertedBase64String } = data;
+                if(convertedBase64String){
+                  this.handleRenderPdf(convertedBase64String);
+                }
+        },
+        error: (err) => {
+          
+        }
+      });
+
+    }
+  }
+
+
+
+  handleRenderPdf(data:string) {
+    const pdfObject = PDFObject.embed(data, '#pdfContainer');
   }
 
 }

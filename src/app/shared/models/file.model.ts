@@ -60,6 +60,9 @@ export class TotalCount {
   count: number = 0;
 }
 
+export class FileBase64Reponse{
+  convertedBase64String:string ="";
+}
 
 
 
