@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FileManagementService } from '../../../shared/service/file-management.service';
-import { Batch } from '../../../shared/models/file.model';
+import { Batch, FileObject } from '../../../shared/models/file.model';
 import { Location } from '@angular/common';
 
 @Component({
@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 export class BatchDetailComponent implements AfterViewInit {
   
   batchDetail:Batch = new Batch();
+  selectedFile:FileObject = new FileObject();
 
   constructor(
     private fileManagementService: FileManagementService, 
@@ -48,6 +49,17 @@ export class BatchDetailComponent implements AfterViewInit {
   public createNewBatch(){
     this.router.navigate(['../createBatch'],{relativeTo: this.activatedRoute });
   
+  }
+
+  public getFileClass(fileObj:FileObject){
+    if( fileObj== this.selectedFile) {
+      return "active";
+    }
+    return "";
+  }
+
+  public onFileSelect(fileObj:FileObject){
+    this.selectedFile = fileObj;
   }
 
 }
