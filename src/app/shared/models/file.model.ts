@@ -64,6 +64,10 @@ export class FileBase64Reponse{
   convertedBase64String:string ="";
 }
 
+export class FileDownloadURL{
+  bucketPdfUrl: string ="";
+}
+
 
 
 

@@ -28,7 +28,8 @@ export class FileManagementService {
   fileUploadURL:string ="api/batchFile/uploadFile";
 
   singleFileDownloadURL:string = "api/batchFile/singleFileDownload";
-  singleFileBase64String:string = "api/batchFile/singleFileBase64";
+  singleFileBase64StringURL:string = "api/batchFile/singleFileBase64";
+  singleFileBucketStorageURL:string = "api/batchFile/singleFileDownloadBucketURL";
 
 
 
@@ -165,7 +166,15 @@ public singleFileDownload(id: string, fileName: string): Observable<any> {
 }
 
 public getFileBase64String(id: string, fileName: string): Observable<any> {
-  let url: string = this.getHttpUrl(this.singleFileBase64String);
+  let url: string = this.getHttpUrl(this.singleFileBase64StringURL);
+  return this._httpClient.post(url, {
+    batchId: id,
+    fileName: fileName
+  }).pipe(catchError(this.errorHandler));
+}
+
+public getFileBucketDownloadUrl(id: string, fileName: string): Observable<any> {
+  let url: string = this.getHttpUrl(this.singleFileBucketStorageURL);
   return this._httpClient.post(url, {
     batchId: id,
     fileName: fileName

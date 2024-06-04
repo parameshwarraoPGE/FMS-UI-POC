@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FileManagementService } from '../../../shared/service/file-management.service';
-import { Batch, FileBase64Reponse, FileObject } from '../../../shared/models/file.model';
+import { Batch, FileBase64Reponse, FileDownloadURL, FileObject } from '../../../shared/models/file.model';
 import { Location } from '@angular/common';
 
 declare const PDFObject: any;
@@ -105,9 +105,29 @@ export class BatchDetailComponent implements AfterViewInit {
     }
   }
 
+  public displayPdfUsingFileUrl(){
+    if(this.selectedFile.fileName && this.batchDetail.batchId){
+      this.fileManagementService.getFileBucketDownloadUrl(this.batchDetail.batchId,this.selectedFile.fileName).subscribe({
+        next: (data:FileDownloadURL) => {
+                const { bucketPdfUrl } = data;
+                if(bucketPdfUrl){
+                  this.handleRenderPdf(bucketPdfUrl);
+                }
+        },
+        error: (err) => {
+          
+        }
+      });
+
+    }
+  }
+
 
 
   handleRenderPdf(data:string) {
+    
+
+  /**needs to be same orign if pdf js needs to be used, currently disconnected! */
     const pdfObject = PDFObject.embed(data, '#pdfContainer');
   }
 
