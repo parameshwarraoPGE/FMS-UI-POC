@@ -1,7 +1,8 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { FileManagementService } from '../../../shared/service/file-management.service';
 import { Batch } from '../../../shared/models/file.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-batch',
@@ -11,12 +12,16 @@ import { ActivatedRoute } from '@angular/router';
 export class CreateBatchComponent implements AfterViewInit {
   batchName: string = "";
   batchId: string = "";
+  batchCreatedBy:string = "";
+  batchCurrentStatus:string ="";
   uploadedFiles: Array<string> = [];
   pageTitle = "Create Batch!"
 
   constructor(
     private fileManagementService: FileManagementService,
     private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private location: Location,    
   ) {
 
   }
@@ -84,8 +89,10 @@ export class CreateBatchComponent implements AfterViewInit {
         next: (data) => {
 
           const batchCreate = data as unknown as Batch;
-          let { fileList,batchName } = batchCreate;
-          this.batchName = batchName;          
+          let { fileList,batchName, createdBy , batchStatus } = batchCreate;
+          this.batchName = batchName;
+          this.batchCreatedBy = createdBy;
+          this.batchCurrentStatus = batchStatus;         
           this.uploadedFiles = fileList.map(file => file.fileName);          
         },
         error: (err) => {
@@ -95,6 +102,20 @@ export class CreateBatchComponent implements AfterViewInit {
       );
     }
 
+  }
+
+  public goBack(){
+    this.location.back();
+  }
+
+
+  public createNewBatch(){
+  this.batchName = "";
+  this.batchId = "";
+  this.batchCreatedBy = "";
+  this.batchCurrentStatus ="";
+  this.uploadedFiles = [];
+  this.pageTitle = "Create Batch!"
   }
 
 }
