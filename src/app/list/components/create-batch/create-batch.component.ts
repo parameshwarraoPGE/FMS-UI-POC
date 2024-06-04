@@ -1,21 +1,36 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FileManagementService } from '../../../shared/service/file-management.service';
 import { Batch } from '../../../shared/models/file.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-batch',
   templateUrl: './create-batch.component.html',
   styleUrl: './create-batch.component.scss'
 })
-export class CreateBatchComponent {
+export class CreateBatchComponent implements AfterViewInit {
   batchName: string = "";
   batchId: string = "";
   uploadedFiles: Array<string> = [];
+  pageTitle = "Create Batch!"
 
-  constructor(private fileManagementService: FileManagementService) {
+  constructor(
+    private fileManagementService: FileManagementService,
+    private activatedRoute: ActivatedRoute,
+  ) {
 
   }
+  ngAfterViewInit(): void {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params && params['batchId']) {
+        this.batchId = params['batchId'];
+        this.pageTitle = "Add Files To Batch!"
+        this.getUploadedBatchFiles();
+      }
+    });
+  }
 
+ 
   public create() {
     if (this.batchName) {
       this.fileManagementService.createBatch(this.batchName).subscribe({
@@ -69,8 +84,9 @@ export class CreateBatchComponent {
         next: (data) => {
 
           const batchCreate = data as unknown as Batch;
-          let { fileList } = batchCreate;
-          this.uploadedFiles = fileList.map(file => file.fileName);
+          let { fileList,batchName } = batchCreate;
+          this.batchName = batchName;          
+          this.uploadedFiles = fileList.map(file => file.fileName);          
         },
         error: (err) => {
 

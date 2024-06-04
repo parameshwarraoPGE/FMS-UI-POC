@@ -238,6 +238,10 @@ export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
+  public modifyBatch(id:string){
+    this.router.navigate(['../createBatch'],{relativeTo: this.activatedRoute, queryParams:{batchId:id} });
+  }
+
 
 
 
