@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Renderer2 } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FileManagementService } from '../../../shared/service/file-management.service';
 import { Batch } from '../../../shared/models/file.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-batch-detail',  
@@ -12,8 +13,12 @@ export class BatchDetailComponent implements AfterViewInit {
   
   batchDetail:Batch = new Batch();
 
-  constructor(private fileManagementService: FileManagementService, private router: Router, 
-    private activatedRoute : ActivatedRoute, private renderer: Renderer2) {
+  constructor(
+    private fileManagementService: FileManagementService, 
+    private router: Router, 
+    private activatedRoute : ActivatedRoute,
+    private location: Location, 
+    private renderer: Renderer2) {
 
     }
   ngAfterViewInit(): void {
@@ -33,6 +38,16 @@ export class BatchDetailComponent implements AfterViewInit {
     }
     );
 
+  }
+
+  public goBack(){
+    this.location.back();
+  }
+
+
+  public createNewBatch(){
+    this.router.navigate(['../createBatch'],{relativeTo: this.activatedRoute });
+  
   }
 
 }
