@@ -1,4 +1,4 @@
-<section class="section-wrapper">    
+<section class="section-wrapper">
     <section>
         <div class="d-flex flex-row align-items-center justify-content-center mt-2 mb-3">
             <div class="text-center fs-1 me-2 mb-3">
@@ -38,10 +38,16 @@
         </div>
     </section>
     <section class="mb-3 mt-3 border border-top">
+        <div *ngIf="deleteMessageInfo" class="d-flex flex-row align-items-center justify-content-center mt-3">
+            <div class="alert alert-danger" role="alert">
+                <div><span>{{deleteMessageInfo}}</span></div>               
+              </div>
+        </div>
         <ng-container *ngFor="let batch of batchListResponse.batchFileData; let i = index">
             
 
-            <div class="d-flex flex-row align-items-center justify-content-center" role="button" (click)="batchDetail(batch.batchId)">
+            <div class="d-flex flex-row align-items-center justify-content-center" role="button"
+                >
                 <div class="card m-3 card-width">
                     <div class="card-header">
                         <h5 class="card-title text-center">{{batch.batchName}}</h5>
@@ -50,9 +56,21 @@
                                 <h6 class="card-subtitle mb-2 text-body-secondary">{{"Batch ID: "}}{{batch._id}}</h6>
                             </li>
                             <li>
-                                <h6 class="card-subtitle mb-2 text-body-secondary">{{"Created By: "}}{{batch.createdBy || " - - -"}}</h6>
+                                <h6 class="card-subtitle mb-2 text-body-secondary">{{"Created By: "}}{{batch.createdBy
+                                    || " - - -"}}</h6>
                             </li>
-                        </ul> 
+                        </ul>
+                        <div class="d-flex flex-row justify-content-end">
+                            <button class="btn btn-sm btn-outline-primary me-2" (click)="batchDetail(batch.batchId)">
+                                <i class="bi bi-file-earmark-plus"></i>
+                                Add Files!</button>
+                            <button class="btn btn-sm btn-outline-success me-2" (click)="batchDetail(batch.batchId)">
+                                <i class="bi bi-file-earmark-check"></i>
+                                Validate Batch!</button>
+                            <button class="btn btn-sm btn-outline-danger" (click)="deleteBatch(batch.batchId,batch.batchName)">
+                                <i class="bi bi-trash3-fill"></i>
+                                Delete Batch!</button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <ng-container *ngIf="batch.fileList.length>0;then showFiles else noFiles">
@@ -68,8 +86,8 @@
                         <ng-template #noFiles>
                             <h4 class="text-danger text-center">No Files!</h4>
                         </ng-template>
-                        
-                        
+
+
                     </div>
                 </div>
 
@@ -83,232 +101,34 @@
 </section>
 
 
-<!--<div class="search-block">
-
-</div>
-<div class="list-container">
-    <div class="search-container">
-        <div class="search-block">
-            <div class="select-block">
-                <div class="select-text">
-                    <span class="select-label-search">
-                        Search by department
+    <div #deleteBatchModal class="modal fade">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-body-secondary">
+                    <span class="modal-title text-danger fs-4">
+                        Are you sure You want to Delete <strong>" {{batchNameTobeDeleted}} "</strong> batch from Database ?
                     </span>
                 </div>
-                <div class="select-element">
-                    <select class="departmentDropdown" [(ngModel)]="selectedDepartmentOption"
-                        (ngModelChange)="onDepartmentSelect($event)">
-                        <option value="" selected>{{'---Select Department ---'}}</option>
-                        <ng-container *ngFor="let department of allDepartmentOptions">
-                            <option [ngValue]="department">{{department}}</option>
-                        </ng-container>
-                    </select>
+                <div class="modal-body">
+                    <p>This Will permanently remove batch and delete All related files!</p>
                 </div>
-
+                <div class="modal-footer">
+                    <button class="btn btn-sm btn-outline-secondary" (click)="confirmBatchModalClose(false)">
+                        <i class="bi bi-x-octagon"></i>
+                        Cancel
+                    </button>
+                    <button class="btn btn-sm btn-danger" (click)="confirmBatchModalClose(true)">
+                        <i class="bi bi-trash3-fill"></i>
+                        Confirm Delete!
+                    </button>
+                </div>
             </div>
-
-            <div class="select-block">
-                <div class="select-text">
-                    <span class="select-label-search">
-                        Search by bussiness Unit
-                    </span>
-                </div>
-                <div class="select-element">
-                    <select class="departmentDropdown" [(ngModel)]="selectedBuOption"
-                        (ngModelChange)="onBussinessUnitSelect($event)">
-                        <option value="" selected>{{'---Select BU ---'}}</option>
-                        <ng-container *ngFor="let bu of allBussinessUnitOptions">
-                            <option [ngValue]="bu">{{bu}}</option>
-                        </ng-container>
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="select-block">
-                <div class="select-text">
-                    <span class="select-label-search">
-                        Search by country
-                    </span>
-                </div>
-                <div class="select-element">
-                    <select class="departmentDropdown" [(ngModel)]="selectedCountryOption"
-                        (ngModelChange)="onCountrySelect($event)">
-                        <option value="" selected>{{'---Select country ---'}}</option>
-                        <ng-container *ngFor="let country of allCountryOptions">
-                            <option [ngValue]="country">{{country}}</option>
-                        </ng-container>
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="select-block">
-                <div class="select-text">
-                    <span class="select-label-search">
-                        Search by city
-                    </span>
-                </div>
-                <div class="select-element">
-                    <select class="departmentDropdown" [(ngModel)]="selectedCityOption"
-                        (ngModelChange)="onCitySelect($event)">
-                        <option value="" selected>{{'---Select city ---'}}</option>
-                        <ng-container *ngFor="let city of allCityOptions">
-                            <option [ngValue]="city">{{city}}</option>
-                        </ng-container>
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="select-block">
-                <div class="select-text">
-                    <span class="select-label-search">
-                        Search by Gender
-                    </span>
-                </div>
-                <div class="select-element">
-                    <select class="departmentDropdown" [(ngModel)]="selectedGenderOption"
-                        (ngModelChange)="onGenderSelect($event)">
-                        <option value="" selected>{{'---Select Gender ---'}}</option>
-                        <ng-container *ngFor="let gender of allGenderOptions">
-                            <option [ngValue]="gender">{{gender}}</option>
-                        </ng-container>
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="select-block">
-                <div class="select-text">
-                    <span class="select-label-search">
-                        Search by Ethnicity
-                    </span>
-                </div>
-                <div class="select-element">
-                    <select class="departmentDropdown" [(ngModel)]="selectedEthnicityOption"
-                        (ngModelChange)="onEthnicitySelect($event)">
-                        <option value="" selected>{{'---Select ethnicity ---'}}</option>
-                        <ng-container *ngFor="let ethnicity of allEthnicityOptions">
-                            <option [ngValue]="ethnicity">{{ethnicity}}</option>
-                        </ng-container>
-                    </select>
-                </div>
-
-            </div>
-
-            <div class="select-block">
-                <div class="select-text">
-                    <span class="select-label-search">
-                        Search by Name
-                    </span>
-                </div>
-                <div class="select-element">
-                    <input #nameSearchText type="text" class="search-inputbox" [(ngModel)]="employeeNameSearchText"
-                        placeholder="search by name" />
-                </div>
-
-            </div>
-
-            <div class="select-block">
-                <div class="select-text">
-                    <span class="select-label-search">
-                        Search by EMP ID
-                    </span>
-                </div>
-                <div class="select-element">
-                    <input #empIDSearchText type="text" class="search-inputbox" [(ngModel)]="employeeIdSearchText"
-                        placeholder="search by emp ID" />
-                </div>
-
-            </div>
-
-
-            <div>
-                <button class="resetButton" (click)="resetAllFeilds()">
-                    Reset All Feilds!</button>
-            </div>
-
-
-
-        </div>
-
+        </div>        
     </div>
-    <div class="pagination Block">
-        <div class="paginationButtonBlock">
-            <div class="paginationButtons">
-                <button type="button" class="btn btn-primary" (click)="pageBackwardButton()"
-                    [disabled]="(currentPage == 1) ? true : false">Previous</button>
-            </div>
-            <div class="currentPage">
-                <span>Current Page: </span><span>{{currentPage}}</span>
-            </div>
-            <div class="TotalCount">
-                <span>Total Count: </span><span>{{totalCount}}</span>
-            </div>
-            <div class="paginationButtons">
-                <button type="button" (click)="pageForwardButton()" [disabled]="disableForwardButton()"
-                    class="btn btn-primary">Next</button>
-            </div>
-        </div>
+    
 
-    </div>
-    <div class="pagination-dropDownBlock">
-        <div class="pagination-Buttonclock">
-            <span class="pageLables">Select Page </span>
-            <select class="paginationDropdown" [ngModel]="currentPage" (ngModelChange)="updatePage($event)">
-                <ng-container *ngFor="let page of totalPages">
-                    <option [ngValue]="page">{{page}}</option>
-                </ng-container>
-            </select>
-        </div>
-        <div class="pagination-Buttonclock">
-            <span class="pageLables">Record Per Page </span>
-            <select class="paginationDropdown" [ngModel]="pageSize" (ngModelChange)="updatePageSize($event)">
-                <ng-container *ngFor="let pageSize of PageSizeValues">
-                    <option [ngValue]="pageSize">{{pageSize}}</option>
-                </ng-container>
-            </select>
-        </div>
-    </div>
-    <ng-container *ngIf="isError;then errorMessage else showRecords">
+    
+    
+    
 
-    </ng-container>
-    <ng-template #errorMessage>
-        <h1 class="error">{{errorText}}</h1>
-    </ng-template>
-    <ng-template #showRecords>
-        <div class="data-block">
-            <ng-container *ngFor="let employee of employeeResponse.empdata; let i = index">
-                <div>
-                    <h1 class="employee-name">{{'"'}}{{employee.Full_Name || '- - -'}}{{'"'}}</h1>
-                    <ul class="employee-card">
-                        <li>
-                            <span class="data-label">Employee ID: </span><span class="data-value">{{employee.Employee_ID
-                                || '- - -'}}</span>
-                        </li>
-                        <li>
-                            <span class="data-label">Job Title: </span><span class="data-value">{{employee.Job_Title ||
-                                '- - -'}}</span>
-                        </li>
-                        <li>
-                            <span class="data-label">Department: </span><span class="data-value">{{employee.Department
-                                || '- - -'}}</span>
-                        </li>
-                        <li>
-                            <span class="data-label">Country: </span><span class="data-value">{{employee.Country || '- -
-                                -'}}</span>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <button class="DetailsButton" (click)="redirectToDetailPage(employee)">
-                        Click Here For Employee Details!</button>
-                </div>
-            </ng-container>
-        </div>
-    </ng-template>
 
-</div>
-
--->

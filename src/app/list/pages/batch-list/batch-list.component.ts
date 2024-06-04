@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Batch, BatchListResponse, BatchListRequest } from '../../../shared/models/file.model';
 import { FileManagementService } from '../../../shared/service/file-management.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,6 +29,11 @@ export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
   public searchByBatchName: string = "";
   public searchByCreatedBy: string = "";
 
+  public deleteMessageInfo:string = "";
+
+  public batchToDeleteId:string = "";
+  public batchNameTobeDeleted:string = "";
+
   
 
   public searchTextSub: Subscription = new Subscription();
@@ -37,8 +42,10 @@ export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('batchCreatedBySearch', { static: false }) createdByTextref: ElementRef = {} as ElementRef;
 
+  @ViewChild('deleteBatchModal', { static: false }) deleteBatchModalRef: ElementRef<any> = {} as ElementRef;
+
   constructor(private fileManagementService: FileManagementService, private router: Router, 
-    private activatedRoute : ActivatedRoute) { }
+    private activatedRoute : ActivatedRoute, private renderer: Renderer2) { }
   ngOnDestroy(): void {
     if (this.searchTextSub) {
       this.searchTextSub.unsubscribe();
@@ -189,5 +196,49 @@ export class BatchListComponent implements OnInit, AfterViewInit, OnDestroy {
   public batchDetail(id:string){
     this.router.navigate(['../',id],{relativeTo: this.activatedRoute });
   }
+
+  deleteBatch(batchId:string,batchName:string="") {
+    this.batchToDeleteId = batchId;
+    this.batchNameTobeDeleted = batchName;
+    this.showDeleteModal();
+  }
+
+  showDeleteModal() {
+    this.renderer.setStyle(this.deleteBatchModalRef.nativeElement,'display','block');
+    this.renderer.addClass(this.deleteBatchModalRef.nativeElement,'show');
+  }
+  closeDeleteModal() {
+    this.renderer.setStyle(this.deleteBatchModalRef.nativeElement,'display','none');
+    this.renderer.removeClass(this.deleteBatchModalRef.nativeElement,'show');
+  }
+
+  confirmBatchModalClose(deleteStatus: boolean) {
+
+    if (deleteStatus) {
+      this.fileManagementService.deleteBatch(this.batchToDeleteId).subscribe({
+        next: (data) => {
+          this.closeDeleteModal();
+          this.deleteMessageInfo = `Batch ${this.batchNameTobeDeleted} Has been deleted and Files have been removed from server!`;
+          this.getBatchList();
+          this.batchToDeleteId = "";
+          this.batchNameTobeDeleted = "";
+          
+        },
+        error: () => {
+          this.closeDeleteModal();
+          this.deleteMessageInfo = "Error Deleting Record , server Error";
+          this.getBatchList();
+        }
+      });
+    } else {
+    this.batchToDeleteId = "";
+    this.batchNameTobeDeleted = "";
+      this.closeDeleteModal();
+    }
+
+  }
+
+
+
 
 }
