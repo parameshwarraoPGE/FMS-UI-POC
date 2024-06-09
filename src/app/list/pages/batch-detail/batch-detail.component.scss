@@ -1,5 +1,12 @@
 .section-wrapper{
     min-height: calc(100vh - 45px);
+    background: linear-gradient(115deg, #62cff4, #2c67f2);
+}
+
+.cardBlock{    
+    width: 84%;
+    border-radius: 10px;   
+    box-shadow: 20px 20px 80px rgb(206, 206, 206);    
 }
 
 .pdfViewerWrapper{

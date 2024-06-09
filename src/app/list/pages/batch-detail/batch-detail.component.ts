@@ -34,7 +34,11 @@ export class BatchDetailComponent implements AfterViewInit {
   public getBatchDetails(batchId:string){
     this.fileManagementService.getBatchDetail(batchId).subscribe({
       next: (data) => {
-       this.batchDetail = data as unknown as Batch;                
+       this.batchDetail = data as unknown as Batch;
+       if(this.batchDetail.fileList.length>0){
+        this.selectedFile = this.batchDetail.fileList[0];
+        this.displayPdf();
+       }                
       },
       error: (err) => {
       }
@@ -42,6 +46,8 @@ export class BatchDetailComponent implements AfterViewInit {
     );
 
   }
+
+
 
   public goBack(){
     this.location.back();
