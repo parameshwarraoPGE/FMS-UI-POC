@@ -29,6 +29,10 @@ export class LoginComponent implements OnInit {
   
 
   public submitHandler(){
+    /**remove below line after sso integration */
+    this.router.navigate(['batch/list']);
+
+    /* uncomment remove above line post sso integration
    
     this.fileManagementService.userLogin(this.username,this.password).subscribe({
       next: (data)=>{
@@ -52,6 +56,8 @@ export class LoginComponent implements OnInit {
         }
       }
     });
+
+    */
   }
 
   public signUpButtonHandler(){

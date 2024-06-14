@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Observable, catchError, throwError, forkJoin, BehaviorSubject } from 'rxjs';
+import { Observable, catchError, throwError, forkJoin, BehaviorSubject, of } from 'rxjs';
 import { userRequestBody, authenicationStatus } from '../models/user.model';
 import {  BatchListRequest } from '../models/file.model';
+import {dummybatchistRespnse} from '../../shared/utils/dummyData';
 
 
 
@@ -98,7 +99,8 @@ export class FileManagementService {
   //employee
   public getBatchList(batchListRequest: BatchListRequest): Observable<any> {
     let url: string = this.getHttpUrl(this.batchListURL);
-    return this._httpClient.post(url, batchListRequest).pipe(catchError(this.errorHandler));
+    return of(dummybatchistRespnse);
+    //return this._httpClient.post(url, batchListRequest).pipe(catchError(this.errorHandler));
   }
 
   public getBatchDetail(batchId: string = ""): Observable<any> {

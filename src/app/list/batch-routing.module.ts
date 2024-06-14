@@ -11,7 +11,7 @@ const routes: Routes = [
     {
         path: 'list',
         component: BatchListComponent,
-        canActivate: [CheckAuthGuardService]
+       // canActivate: [CheckAuthGuardService]
     },
     {
         path: 'createBatch',
